@@ -2,7 +2,7 @@
 const question = document.querySelector("#question");
 const answersBox = document.querySelector("#answers-box");
 const quizzContainer = document.querySelector("#quizz-container");
-const scoreContainer = document.querySelector("score-container");
+const scoreContainer = document.querySelector("#score-container");
 const letters = ['a', 'b', 'c', 'd'];
 let points = 0;
 let actualQuestion = 0;
@@ -160,23 +160,55 @@ function checkAnswer(btn) {
     // Exibir próxima pergunta
     nextQuestion();
 
-    // Exibe a próxima pergunta no Quizz
-    function nextQuestion() {
+}
 
-        // timer para usuário ver as respostas
-        setTimeout(function () {
+// Exibe a próxima pergunta no Quizz
+function nextQuestion() {
 
-            // verifica se ainda há perguntas
-            if (actualQuestion >= questions.length) {
+    // timer para usuário ver as respostas
+    setTimeout(function () {
 
-            }
+        // verifica se ainda há perguntas
+        if (actualQuestion >= questions.length) {
+            // apresenta a msg de sucesso
+            showSucccessMessage();
+            return;
+        }
 
-            createQuestion(actualQuestion)
+        createQuestion(actualQuestion);
 
-        }, 1500);
+    }, 700);
 
-    }
+}
 
+// Exibe a tela final
+function showSucccessMessage() {
+
+    hideOrShowQuizz();
+
+    // trocar dados da tela de sucesso
+
+    // calcular o score
+    const score = ((points / questions.length) * 100).toFixed(2);
+
+    const displayScore = document.querySelector("#display-score span");
+
+    displayScore.textContent = score.toString();
+
+    // alterar o número de perguntas corretas
+    const correctAnswers = document.querySelector("#correct-answers");
+    correctAnswers.textContent = points;
+
+    // alterar o total de perguntas
+    const totalQuestions = document.querySelector("#questions-qty");
+    totalQuestions.textContent = questions.length;
+
+}
+
+// Mostra ou esconde o score
+function hideOrShowQuizz() {
+    quizzContainer.classList.toggle("hide");
+    scoreContainer.classList.toggle("hide");
 }
 
 
